@@ -1,23 +1,30 @@
 import logo from './logo.svg';
-import './App.css';
+import Homepage from './Pages/Homepage';
+import Blogpage from './Pages/Blogpage';
+import PostNotFound from './Pages/PostNotFound'
+import FindPage from './Pages/FindPage';
+import { Route, Routes, useLocation, Link } from 'react-router-dom';
 
 function App() {
+  const location = useLocation();
+  console.log(location.pathname)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {location.pathname !== "/" &&
+        <nav>
+          <Link to={"/"}>
+            <div className='home'>
+              <span>🏠 Take me Home</span>
+            </div>
+          </Link></nav>}
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/posts/:id" element={<Blogpage />} />
+        <Route path="/tags/:tag" element={<FindPage />} />
+        <Route path="*" element={<PostNotFound />} />
+      </Routes> 
+
     </div>
   );
 }
